@@ -1,4 +1,4 @@
-# leveldb-sys
+# leveldb-mcpe-sys
 
 Lowlevel bindings to the leveldb C library with zlib supported.
 
