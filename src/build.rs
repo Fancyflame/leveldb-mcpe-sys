@@ -89,6 +89,9 @@ fn main() {
     // Build LevelDB
     build_leveldb(snappy_prefix);
 
+    //We need zlib
+    println!("cargo:rustc-link-lib=z");
+
     // Link to the standard C++ library
     let target = env::var("TARGET").unwrap();
     if target.contains("apple") || target.contains("freebsd") {

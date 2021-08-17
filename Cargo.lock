@@ -33,7 +33,7 @@ dependencies = [
 ]
 
 [[package]]
-name = "leveldb-sys"
+name = "leveldb-mcpe-sys"
 version = "2.0.9"
 dependencies = [
  "cmake",
