@@ -39,7 +39,10 @@ opaque!{
 #[derive(Copy,Clone)]
 pub enum Compression {
   No = 0,
-  Snappy = 1
+  Snappy = 1,
+  Zlib = 2,
+  Zstd = 3,
+  ZlibRaw = 4
 }
 
 extern "C" {
