@@ -42,8 +42,7 @@ fn build_leveldb(snappy_prefix: Option<PathBuf>) {
     let libdir = Path::new(&outdir).join(LIBDIR);
 
     env::set_var("NUM_JOBS", num_cpus::get().to_string());
-    let mut config =
-        cmake::Config::new(Path::new("deps").join("leveldb-mcpe"));
+    let mut config = cmake::Config::new(Path::new("deps").join("leveldb"));
     config
         .define("LEVELDB_BUILD_TESTS", "OFF")
         .define("LEVELDB_BUILD_BENCHMARKS", "OFF")
@@ -53,11 +52,8 @@ fn build_leveldb(snappy_prefix: Option<PathBuf>) {
         let ldflags = format!("/LIBPATH:{}", snappy_prefix.join(LIBDIR).display());
         #[cfg(not(target_env = "msvc"))]
         let ldflags = format!("-L{}", snappy_prefix.join(LIBDIR).display());
-    
-        env::set_var(
-            "LDFLAGS",
-            ldflags
-        );
+
+        env::set_var("LDFLAGS", ldflags);
 
         config
             .define("HAVE_SNAPPY", "ON")
@@ -77,6 +73,13 @@ fn build_leveldb(snappy_prefix: Option<PathBuf>) {
     println!("cargo:rustc-link-lib=static=leveldb");
 }
 
+fn build_zlib() {
+    let mut config = cmake::Config::new(Path::new("deps").join("zlib"));
+    config.define()
+    config.build();
+    println!("cargo:rustc-link-lib=static=zlib");
+}
+
 fn main() {
     println!("[build] Started");
 
@@ -89,8 +92,7 @@ fn main() {
     // Build LevelDB
     build_leveldb(snappy_prefix);
 
-    //We need zlib
-    println!("cargo:rustc-link-lib=z");
+    build_zlib();
 
     // Link to the standard C++ library
     let target = env::var("TARGET").unwrap();
