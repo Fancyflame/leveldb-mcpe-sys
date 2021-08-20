@@ -74,10 +74,14 @@ fn build_leveldb(snappy_prefix: Option<PathBuf>) {
 }
 
 fn build_zlib() {
-    let mut config = cmake::Config::new(Path::new("deps").join("zlib"));
-    config.define()
-    config.build();
-    println!("cargo:rustc-link-lib=static=zlib");
+    let libdir=Path::new(&env::var("OUT_DIR").unwrap()).join(LIBDIR);
+    cmake::Config::new(Path::new("deps").join("zlib"))
+        .define("BUILD_SHARED_LIBS", "OFF")
+        .profile("Release")
+        .define("CMAKE_INSTALL_LIBDIR", &libdir)
+        .build();
+    println!("cargo:rustc-link-search=native={}",libdir.display());
+    println!("cargo:rustc-link-lib=static=z");
 }
 
 fn main() {
