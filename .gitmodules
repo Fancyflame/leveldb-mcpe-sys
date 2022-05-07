@@ -1,6 +1,6 @@
 [submodule "deps/leveldb"]
 	path = deps/leveldb
-	url = https://github.com/pmmp/leveldb.git
+	url = https://github.com/Mojang/leveldb-mcpe.git
 [submodule "deps/zlib"]
 	path = deps/zlib
 	url = https://github.com/madler/zlib.git
